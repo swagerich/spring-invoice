@@ -1,11 +1,14 @@
 package com.erich.factura.Entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+
+
+import java.io.Serial;
 import java.io.Serializable;
 
 import java.util.Date;
@@ -14,6 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
+    @Serial
     private static final long serialVersionUID=1L;
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
