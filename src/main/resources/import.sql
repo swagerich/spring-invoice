@@ -1,0 +1,2 @@
+INSERT INTO clients (name,lastname,mail,creation_date,foto) VALUES ('ERICH','hc','erich@gmail.com','2022-11-23','');
+INSERT INTO clients (name,lastname,mail,creation_date,foto) VALUES ('EVELING','hc','eveling@gmail.com','2022-11-23','');
