@@ -11,16 +11,18 @@ import jakarta.validation.constraints.NotEmpty;
 import java.io.Serial;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
     @Serial
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "No debe estar vacia")
@@ -41,5 +43,16 @@ public class Client implements Serializable {
     //@Lob
     //@Column(name = "foto",columnDefinition = "BLOB")
     private String foto;
+
+    @OneToMany(mappedBy = "client",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Invoice> invoices;
+
+    public Client() {
+        this.invoices = new ArrayList<>();
+    }
+
+    public void addInvoice(Invoice invoice) {
+        this.invoices.add(invoice);
+    }
 
 }
