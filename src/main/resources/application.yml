@@ -24,3 +24,6 @@ spring:
 
 
 #SWAGGER
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-invoice.html

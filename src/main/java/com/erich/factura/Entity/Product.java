@@ -1,5 +1,6 @@
 package com.erich.factura.Entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "products")
+@Schema(name = "Product entity to represent name and price and date")
 public class Product {
 
     @Id
@@ -19,7 +21,7 @@ public class Product {
     private Long id;
 
     private String name;
-
+    @Schema(name = "Price in Soles, with 2 decimals")
     private BigDecimal price;
 
     @Temporal(value = TemporalType.DATE)
