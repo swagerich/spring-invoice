@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Spring</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listar}">Client</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container py-4">
+    <div class="card border-secondary">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+            <h4 class="card-title">
+                <a th:href="@{'/ver/'+ ${invoice.client.id}}" class="btn btn-secondary btn-xs">&laquo; Back</a>
+            </h4>
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-primary" th:text="'Client data'"></li>
+                <li class="list-group-item" th:text="${invoice.client}"></li>
+                <li class="list-group-item" th:text="${invoice.client.mail}"></li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning" th:text="'Invoice data'"></li>
+                <li class="list-group-item" th:text="'Folio: ' + ${invoice.id}"></li>
+                <li class="list-group-item" th:text="'Description: ' + ${invoice.description}"></li>
+                <li class="list-group-item" th:text="'Date: ' + ${invoice.date}"></li>
+            </ul>
+            <div class="alert alert-info my-4" th:if="${#lists.isEmpty(invoice.details)}"
+                 th:text="'No details for invoice' + ${invoice.description}">
+
+            </div>
+
+            <table th:if="${not #lists.isEmpty(invoice.details)}"
+                   class="table table-striped table-hover table-bordered my-3">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="line: ${invoice.details}">
+                    <td th:text="${line.product.name}"></td>
+                    <td th:text="${line.product.price}"></td>
+                    <td th:text="${line.quantity}"></td>
+                    <td th:text="${line.calculateAmount()}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 class="float-right">Amount Total<span th:text="${invoice.calculateTotal()}"
+                                                      class="badge badge-secondary"></span></h5>
+            <div class="card border-info mb-4" style="max-width: 20rem;">
+                <div class="card-header">Observation</div>
+                <div class="card-body">
+                    <p class="card-text" th:text="${invoice.observation}"
+                       th:if="${not #strings.isEmpty(invoice.observation)}"></p>
+                    <h4 class="card-title" th:if="${#strings.isEmpty(invoice.observation)}"
+                        th:text="'has no observations'"></h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+</html>

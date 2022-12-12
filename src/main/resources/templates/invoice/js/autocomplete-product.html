@@ -23,15 +23,67 @@
                 });
             },
             select: function (event, ui) {
-                $("#search_product").val(ui.item.label);
+                // $("#search_product").val(ui.item.label);
+                if (itemsHelper.hasProduct(ui.item.value)) {
+                    itemsHelper.incrementQuantity(ui.item.value, ui.item.price);
+                    return false;
+                }
+
+                let line = $("#templateInvoiceDetail").html();
+                line = line.replace(/{ID}/g, ui.item.value);
+                line = line.replace(/{NAME}/g, ui.item.label);
+                line = line.replace(/{PRICE}/g, ui.item.price);
+                $("#loadDetailProducts tbody").append(line);
+                itemsHelper.calculateImport(ui.item.value, ui.item.price, 1)
                 return false;
             },
-            focus:function (event,ui){
+            focus: function (event, ui) {
                 event.preventDefault();
                 $('input[name="search_product"]').val(ui.item.label);
             }
         });
+
+        $("form").submit(function () {
+            $('#templateInvoiceDetail').remove();
+        });
+
     });
+    let itemsHelper = {
+
+        calculateImport: function (id, price, quantity) {
+            $("#overall_cost_" + id).html(parseInt(price) * parseInt(quantity));
+            this.calculateTotal();
+        },
+
+        hasProduct: function (id) {
+            let resultado = false;
+            $('input[name="detail_id[]"]').each(function () {
+                if (parseInt(id) === parseInt($(this).val())) {
+                    resultado = true;
+                }
+            });
+            return resultado;
+        },
+
+        incrementQuantity: function (id, price) {
+            let quantity = $("#quantity_" + id).val() ? parseInt($("#quantity_" + id).val()) : 0;
+            $("#quantity_" + id).val(++quantity);
+            this.calculateImport(id, price, quantity);
+        },
+
+        deleteInvoiceLine: function (id) {
+            $("#row_" + id).remove();
+            this.calculateTotal();
+        },
+
+        calculateTotal: function () {
+            let total = 0;
+            $('span[id^="overall_cost_"]').each(function () {
+                total += parseInt($(this).html());
+            });
+            $('#total').html(total);
+        }
+    }
 </script>
 </body>
 </html>

@@ -45,7 +45,7 @@
         <tbody>
         <tr th:each="clients : ${all}">
             <td><a class="btn btn-primary" th:href="@{/ver/} + ${clients.id}" th:text="${clients.id}"></a></td>
-            <td th:text="${clients.id}"></td>
+  <!--          <td th:text="${clients.id}"></td>-->
             <td th:text="${clients.name}"></td>
             <td th:text="${clients.lastName}"></td>
             <td th:text="${clients.mail}"></td>

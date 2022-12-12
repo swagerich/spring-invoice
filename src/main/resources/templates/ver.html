@@ -31,7 +31,8 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <h4 class="card-title">
-                <a class="btn btn-primary btn-xs" th:href="@{'/invoice/form/' + ${client.id}}" th:text="'add invoice'"></a>
+                <a class="btn btn-primary btn-xs" th:href="@{'/invoice/form/' + ${client.id}}"
+                   th:text="'add invoice'"></a>
             </h4>
             <img th:if="${#strings.length(client.foto) > 0}" class="img-thumbnail rounded float-left"
                  th:src="@{'/upload/'+ ${client.foto}}" th:alt="${client.foto}"
@@ -51,6 +52,8 @@
                     <th>Description</th>
                     <th>Date</th>
                     <th>Total</th>
+                    <th>View</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,6 +62,11 @@
                     <td th:text="${invoice.description}"></td>
                     <td th:text="${invoice.date}"></td>
                     <td th:text="${invoice.calculateTotal()}"></td>
+                    <td><a class="btn btn-primary btn-xs" th:href="@{'/invoice/ver/' + ${invoice.id}}"
+                           th:text="'Detail'"></a></td>
+                    <td><a class="btn btn-danger btn-xs" th:href="@{'/invoice/delete/' + ${invoice.id}}"
+                           th:text="'Delete'"
+                           onclick="return confirm('¿Are you sure you want to delete the invoice?');"></a></td>
                 </tr>
                 </tbody>
             </table>

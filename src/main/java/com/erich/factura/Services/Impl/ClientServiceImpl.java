@@ -1,8 +1,12 @@
 package com.erich.factura.Services.Impl;
 
 import com.erich.factura.Entity.Client;
+import com.erich.factura.Entity.Invoice;
+import com.erich.factura.Entity.Product;
 import com.erich.factura.Exception.ClientServiceExepction;
+import com.erich.factura.Exception.InvoiceNotFoundException;
 import com.erich.factura.Repository.ClientRepository;
+import com.erich.factura.Repository.InvoiceRepository;
 import com.erich.factura.Services.ClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -21,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.erich.factura.Util.FileUtil.UPLOAD_FOLDER;
@@ -31,6 +36,8 @@ import static com.erich.factura.Util.FileUtil.UPLOAD_FOLDER;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepo;
+
+    private final InvoiceRepository invoiceRepo;
 
     @Transactional(readOnly = true)
     @Override
@@ -96,7 +103,38 @@ public class ClientServiceImpl implements ClientService {
         }
 
     }
+    @Transactional(readOnly = true)
+    @Override
+    public Client fetchByIdWithInvoce(Long id) {
+        return clientRepo.fetchByIdWithInvoces(id);
+    }
 
+    //    =======================INVOCES=======================
+    @Transactional
+    @Override
+    public void saveInvoice(Invoice invoice) {
+        invoiceRepo.save(invoice);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Invoice findInvoiceById(Long id) {
+
+        return invoiceRepo.findById(id).orElseThrow(() -> new InvoiceNotFoundException("Oops,Invoice does not exist!"));
+    }
+
+    @Override
+    public void deleteInvoice(Long id) {
+        invoiceRepo.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public Invoice fetchInvoceById(Long id) {
+        return invoiceRepo.fetchByIdWithClientWhitInvoiceDetailWithProduct(id);
+    }
+
+    //    =======================INVOCES=======================
     @Transactional(readOnly = true)
     @Override
     public Page<Client> page(Pageable pageable) {

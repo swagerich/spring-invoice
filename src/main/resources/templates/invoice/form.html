@@ -33,7 +33,8 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <h4 class="card-title">
-                <a th:href="@{'/ver/' + ${invoice.client.id}}" th:text="'&laquo; back'" class="btn btn-secondary btn-xs" ></a>
+                <a th:href="@{'/ver/' + ${invoice.client.id}}" th:text="'&laquo; back'"
+                   class="btn btn-secondary btn-xs"></a>
             </h4>
 
             <div class="form-group row">
@@ -44,11 +45,12 @@
                 </div>
             </div>
 
-            <form th:action="@{/invoice/form/}" th:object="${invoice}" method="post">
+            <form th:action="@{/invoice/form}" th:object="${invoice}" method="post">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" th:text="'Description'"></label>
                     <div class="col-sm-6">
-                        <input type="text" th:field="*{description}" class="form-control">
+                        <input type="text" th:field="*{description}" class="form-control" th:errorclass="'form-control is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
                     </div>
 
                 </div>
@@ -60,12 +62,26 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="search_product"  class="col-sm-2 col-form-label" th:text="'Search Product'"></label>
+                    <label for="search_product" class="col-sm-2 col-form-label" th:text="'Search Product'"></label>
                     <div class="col-sm-6">
                         <input type="text" name="search_product" id="search_product" class="form-control">
                     </div>
-
                 </div>
+                <table th:replace="invoice/template-items :: invoiceDetail"></table>
+                <table id="loadDetailProducts" class="table table-sm table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>PRICE</th>
+                        <th>QUANTITY</th>
+                        <th>OVERALL COST</th>
+                        <th>DELETE</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <h5>Total<span class="badge badge-secondary" id="total">0</span></h5>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <input class="btn btn-primary" type="submit" th:value="${titulo}">

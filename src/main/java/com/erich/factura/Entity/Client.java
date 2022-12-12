@@ -2,6 +2,9 @@ package com.erich.factura.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.Email;
@@ -15,7 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
@@ -44,7 +48,7 @@ public class Client implements Serializable {
     //@Column(name = "foto",columnDefinition = "BLOB")
     private String foto;
 
-    @OneToMany(mappedBy = "client",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Invoice> invoices;
 
     public Client() {
@@ -55,4 +59,8 @@ public class Client implements Serializable {
         this.invoices.add(invoice);
     }
 
+    @Override
+    public String toString() {
+        return name + " " + lastName;
+    }
 }

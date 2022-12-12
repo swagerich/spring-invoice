@@ -1,6 +1,8 @@
 package com.erich.factura.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +22,7 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "the description cannot be empty")
     private String description;
 
     private String observation;
@@ -34,7 +37,7 @@ public class Invoice {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id")
-    private List<InvoceDetail> details;
+    private List<InvoiceDetail> details;
 
     @PrePersist
     public void prePersist() {
@@ -45,7 +48,7 @@ public class Invoice {
         this.details = new ArrayList<>();
     }
 
-    public void addDetailInvoce(InvoceDetail line) {
+    public void addDetailInvoce(InvoiceDetail line) {
         this.details.add(line);
     }
 

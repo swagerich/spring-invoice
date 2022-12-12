@@ -8,4 +8,6 @@ import java.util.List;
 public interface ProductService {
 
     List<Product> findByName(String name);
+
+    Product findProductById(Long id);
 }

@@ -45,7 +45,7 @@ public class ClientController {
 
     @GetMapping("/ver/{id}")
     public String verPhoto(@PathVariable Long id, Model model) {
-        Client client = clientService.update(id);
+        Client client = clientService.fetchByIdWithInvoce(id);  //Aplique optimizacion de JPQ (sino usaria update)
         if (client == null) {
             return "redirect/listar";
         }
