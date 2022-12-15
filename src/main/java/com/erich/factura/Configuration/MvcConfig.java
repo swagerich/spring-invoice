@@ -4,6 +4,7 @@ package com.erich.factura.Configuration;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.file.Paths;
@@ -33,4 +34,11 @@ public class MvcConfig implements WebMvcConfigurer {
         return  ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""+ recurso.getFilename() +"\"")
                 .body(recurso);
     }*/
+
+    /*
+    AQUI MANEJAMOS EL ERROR 403 FORBIEN
+    * */
+    public void addViewControllers(ViewControllerRegistry registry){
+        registry.addViewController("/error_403").setViewName("error_403");
+    }
 }

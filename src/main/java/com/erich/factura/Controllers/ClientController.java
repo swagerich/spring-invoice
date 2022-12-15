@@ -25,7 +25,7 @@ public class ClientController {
     }
 
 
-    @GetMapping("/listar")
+    @GetMapping({"/listar","/"})
     public String listar(/*@RequestParam(name = "page", defaultValue = "0") int page,*/ Model model) {
         /*Pageable pageable =  PageRequest.of(page,4, Sort.Direction.DESC);
         Page<Client> clients = clientService.page(pageable);*/

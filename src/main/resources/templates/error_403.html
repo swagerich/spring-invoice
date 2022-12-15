@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Fotito</title>
+    <title>Title</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
           integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
@@ -35,7 +36,8 @@
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <form id="logoutForm" th:action="@{/logout}" method="post">
-                            <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out
+                            <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();"
+                                    type="submit">Sign Out
                             </button>
                         </form>
                     </div>
@@ -45,49 +47,13 @@
     </nav>
 </header>
 <div class="container py-4">
-    <div class="card border-secondary">
-        <div class="card-header" th:text="${titulo}"></div>
+
+    <div class="card bg-danger text-white">
+        <div class="card-header"> Error: access denied</div>
         <div class="card-body">
-            <h4 class="card-title">
-                <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary btn-xs" th:href="@{'/invoice/form/' + ${client.id}}"
-                   th:text="'add invoice'"></a>
-            </h4>
-            <img th:if="${#strings.length(client.foto) > 0}" class="img-thumbnail rounded float-left"
-                 th:src="@{'/upload/'+ ${client.foto}}" th:alt="${client.foto}"
-            />
-            <ul class="list-group">
-                <li class="list-group-item" th:text="${client.name}"></li>
-                <li class="list-group-item" th:text="${client.lastName}"></li>
-                <li class="list-group-item" th:text="${client.mail}"></li>
-                <li class="list-group-item" th:text="${client.createAt}"></li>
-            </ul>
-            <div th:if="${#lists.isEmpty(client.invoices)}" class="alert alert-info my-4"
-                 th:text="'No hay facturas asignadas para el cliente' + ${client.name} + ' ' + ${client.lastName}"></div>
-            <table th:if="${not #lists.isEmpty(client.invoices)}" class="table table-bordered table-light my-4">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Folio</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th sec:authorize="hasRole('ROLE_ADMIN')">View</th>
-                    <th sec:authorize="hasRole('ROLE_ADMIN')">Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="invoice:${client.invoices}">
-                    <td th:text="${invoice.id}"></td>
-                    <td th:text="${invoice.description}"></td>
-                    <td th:text="${invoice.date}"></td>
-                    <td th:text="${invoice.calculateTotal()}"></td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs" th:href="@{'/invoice/ver/' + ${invoice.id}}"
-                           th:text="'Detail'"></a></td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs" th:href="@{'/invoice/delete/' + ${invoice.id}}"
-                           th:text="'Delete'"
-                           onclick="return confirm('¿Are you sure you want to delete the invoice?');"></a></td>
-                </tr>
-                </tbody>
-            </table>
+            <h5 class="card-title">we're sorry<span th:text="${#httpServletRequest.remoteUser}"></span>, You do not have
+                permissions to access this resource.</h5>
+            <a th:href="@{/listar}" class="btn btn-outline-light" role="button">Back</a>
         </div>
     </div>
 

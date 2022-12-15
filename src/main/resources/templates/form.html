@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title th:text="${titulo}">Formulari Clients</title>
@@ -8,8 +8,45 @@
     <!--<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">-->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 </head>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Spring</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listar}">Client</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-outline-primary" th:href="@{/login}">Sing In</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="dropdown show">
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span sec:authentication="name"></span>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <form id="logoutForm" th:action="@{/logout}" method="post">
+                            <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 <body>
-<div class="container">
+<div class="container py-4">
     <h1 th:text="${titulo}" class="text-secondary border border-primary border-start-0 y border-end-0">
     </h1>
     <div th:object="${client}" th:remove="tag">

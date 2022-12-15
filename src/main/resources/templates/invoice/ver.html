@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -22,6 +22,24 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/listar}">Client</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-outline-primary" th:href="@{/login}">Sing In</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="dropdown show">
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span sec:authentication="name"></span>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <form id="logoutForm" th:action="@{/logout}" method="post">
+                            <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out
+                            </button>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>

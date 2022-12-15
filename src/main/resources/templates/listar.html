@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title th:text="${titulo}">List Clients</title>
@@ -23,36 +23,54 @@
                     <a class="nav-link" th:href="@{/listar}">Client</a>
                 </li>
             </ul>
+            <ul class="navbar-nav navbar-right">
+                <li sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-outline-primary" th:href="@{/login}">Sing In</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="dropdown show">
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span sec:authentication="name"></span>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <form id="logoutForm" th:action="@{/logout}" method="post">
+                            <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>
 <div class="container py-4">
     <h1 class="text-secondary border border-primary border-start-0 y border-end-0" th:text="${titulo}"></h1>
-    <a class="btn btn-primary btn-xs" th:href="@{/form}">Create Client</a>
+    <a class="btn btn-primary btn-xs" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/form}">Create Client</a>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>id</th>
+            <th sec:authorize="hasRole('ROLE_USER')">id</th>
             <th>name</th>
             <th>lastName</th>
             <th>mail</th>
             <th>date</th>
-            <th>edit</th>
-            <th>add invoice</th>
-            <th>delete</th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')">edit</th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')">add invoice</th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')">delete</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="clients : ${all}">
-            <td><a class="btn btn-primary" th:href="@{/ver/} + ${clients.id}" th:text="${clients.id}"></a></td>
+            <td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary" th:href="@{/ver/} + ${clients.id}" th:text="${clients.id}"></a></td>
   <!--          <td th:text="${clients.id}"></td>-->
             <td th:text="${clients.name}"></td>
             <td th:text="${clients.lastName}"></td>
             <td th:text="${clients.mail}"></td>
             <td th:text="${clients.createAt}"></td>
-            <td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${clients.id}" th:text="'edit'"></a></td>
-            <td><a class="btn btn-success btn-xs" th:href="@{'/invoice/form/' + ${clients.id}}" th:text="'add invoice'"></a></td>
-            <td><a class="btn btn-danger btn-xs" th:href="@{/delete/} + ${clients.id}" th:text="'delete'"
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${clients.id}" th:text="'edit'"></a></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-success btn-xs" th:href="@{'/invoice/form/' + ${clients.id}}" th:text="'add invoice'"></a></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs" th:href="@{/delete/} + ${clients.id}" th:text="'delete'"
                    onclick="return confirm('Estas seguro de eliminar?')"></a></td>
         </tr>
         </tbody>
