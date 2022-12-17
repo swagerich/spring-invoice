@@ -19,3 +19,9 @@ INSERT INTO invoices_details(quantity,invoice_id,product_id) VALUES (1,1,4);
 INSERT INTO invoices(description,observation,creation_date,client_id) VALUES ('FACTURA EQUIPOS GAMER',null,NOW(),1);
 
 INSERT INTO invoices_details(quantity,invoice_id,product_id) VALUES (3,2,5);
+
+INSERT INTO users(username,password,enabled) VALUES ('erich','$2a$10$k29ZC8YToUVyxAXlklw3XuSPRYijegyf0RAu/ipTjrOB5iYjaENgO',true);
+INSERT INTO users(username,password,enabled) VALUES ('jose','$2a$10$k29ZC8YToUVyxAXlklw3XuSPRYijegyf0RAu/ipTjrOB5iYjaENgO',true);
+
+INSERT INTO roles(user_id,authority) VALUES (1,'ROLE_ADMIN');
+INSERT INTO roles(user_id,authority) VALUES (2,'ROLE_USER');

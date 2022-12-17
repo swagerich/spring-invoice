@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/listar")
+                .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/listar","/swagger-ui-invoice.html")
                 .permitAll()
                 .requestMatchers("/ver/**").hasAnyRole("USER")
                 .requestMatchers("/uploads/**").hasAnyRole("USER")
@@ -45,8 +45,7 @@ public class WebSecurityConfig {
                 .and().exceptionHandling().accessDeniedPage("/error_403");
 
 
-        // .authenticationProvider(authenticationProvider();
-
+        http.authenticationProvider(securityConfiguration.authenticationProvider());
         return http.build();
     }
     /*@Bean

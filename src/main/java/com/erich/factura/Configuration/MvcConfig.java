@@ -9,9 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.file.Paths;
 
-/*
-* Utitlizamos WebMvcConfigurer  esta configuracion para guardar en el directorio de wndows o linux
-* */
+/**
+ * Utitlizamos WebMvcConfigurer  esta configuracion para guardar en el directorio de wndows o linux
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
     @Override
@@ -35,9 +35,11 @@ public class MvcConfig implements WebMvcConfigurer {
                 .body(recurso);
     }*/
 
-    /*
-    AQUI MANEJAMOS EL ERROR 403 FORBIEN
-    * */
+
+    /**
+     * UTILIZAMOS EL ViewControllerRegistry PARA MANEJAR LOS PERMISOS
+     * @param registry
+     */
     public void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/error_403").setViewName("error_403");
     }
