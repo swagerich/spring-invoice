@@ -1,10 +1,9 @@
 package com.erich.factura.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.Email;
@@ -48,6 +47,7 @@ public class Client implements Serializable {
     //@Column(name = "foto",columnDefinition = "BLOB")
     private String foto;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Invoice> invoices;
 

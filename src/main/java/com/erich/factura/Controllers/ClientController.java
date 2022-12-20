@@ -1,6 +1,7 @@
 package com.erich.factura.Controllers;
 
 
+import com.erich.factura.Controllers.Api.ApiClient;
 import com.erich.factura.Entity.Client;
 import com.erich.factura.Services.Impl.ClientServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -11,12 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.Valid;
+
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Controller
 @SessionAttributes("client")
-public class ClientController {
+public class ClientController implements ApiClient {
 
     private final ClientServiceImpl clientService;
 
@@ -24,6 +27,13 @@ public class ClientController {
         this.clientService = clientService;
     }
 
+    /**
+     * API REST
+     * @return List<Client></Client>
+     */
+    public List<Client> finAll() {
+     return clientService.findAll();
+    }
 
     @GetMapping({"/listar","/"})
     public String listar(/*@RequestParam(name = "page", defaultValue = "0") int page,*/ Model model) {

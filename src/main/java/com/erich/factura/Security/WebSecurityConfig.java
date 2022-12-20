@@ -29,9 +29,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/listar","/swagger-ui-invoice.html")
+                .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/listar**","/swagger-ui-invoice.html/**")
                 .permitAll()
-                .requestMatchers("/ver/**").hasAnyRole("USER")
+                .requestMatchers("/ver/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers("/uploads/**").hasAnyRole("USER")
                 .requestMatchers("/form/**").hasAnyRole("ADMIN")
                 .requestMatchers("/delete/**").hasAnyRole("ADMIN")

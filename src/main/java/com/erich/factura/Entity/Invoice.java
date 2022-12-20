@@ -1,8 +1,8 @@
 package com.erich.factura.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,6 +32,7 @@ public class Invoice {
     @Column(name = "creation_date")
     private Date date;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
 

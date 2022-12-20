@@ -50,7 +50,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th sec:authorize="hasRole('ROLE_USER')">id</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">id</th>
             <th>name</th>
             <th>lastName</th>
             <th>mail</th>
@@ -62,7 +62,7 @@
         </thead>
         <tbody>
         <tr th:each="clients : ${all}">
-            <td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary" th:href="@{/ver/} + ${clients.id}" th:text="${clients.id}"></a></td>
+            <td sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')"><a class="btn btn-primary" th:href="@{/ver/} + ${clients.id}" th:text="${clients.id}"></a></td>
   <!--          <td th:text="${clients.id}"></td>-->
             <td th:text="${clients.name}"></td>
             <td th:text="${clients.lastName}"></td>

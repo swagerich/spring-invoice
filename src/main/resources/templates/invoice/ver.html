@@ -52,6 +52,7 @@
         <div class="card-body">
             <h4 class="card-title">
                 <a th:href="@{'/ver/'+ ${invoice.client.id}}" class="btn btn-secondary btn-xs">&laquo; Back</a>
+                <a th:href="@{'/invoice/ver/' + ${invoice.id}(format=pdf)}" class="btn btn-primary float-right">EXPORT PDF</a>
             </h4>
             <ul class="list-group my-2">
                 <li class="list-group-item list-group-item-primary" th:text="'Client data'"></li>
