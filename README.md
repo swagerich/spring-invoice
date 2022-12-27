@@ -10,3 +10,4 @@
 * Spring boot 3
 * Thymeleaf
 * Swagger
+* JWT(Token)
