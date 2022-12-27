@@ -5,6 +5,7 @@ import com.erich.factura.Controllers.Api.ApiClient;
 import com.erich.factura.Entity.Client;
 import com.erich.factura.Services.Impl.ClientServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,7 +72,7 @@ public class ClientController implements ApiClient {
             model.addAttribute("titulo", "Formulario Cliente");
             return "form";
         }
-        clientService.save(client,foto);
+        clientService.save(client, foto);
         session.setComplete();
         return "redirect:listar";
     }

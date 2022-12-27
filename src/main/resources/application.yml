@@ -33,3 +33,9 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger-ui-invoice.html
+
+#TOKEN UTILS
+app:
+  jwt:
+    key: ErichDeveloper2023
+    expiration: 3600000
