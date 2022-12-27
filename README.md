@@ -3,10 +3,10 @@
 ###### Utilidades
 
 * Lombok
-* Spring Web
+* Spring Web 6
 * Postgress
 * Validation
 * Spring Security
-* Spring boot
+* Spring boot 3
 * Thymeleaf
 * Swagger
